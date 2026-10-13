@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Libby Lou's</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Italiana&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:      #F5EFE6;
+      --latte:      #B8896A;
+      --espresso:   #5C3D2E;
+      --bark:       #3B2A1A;
+      --sage:       #7A9070;
+      --warm-white: #FBF7F2;
+      --gingham-color: #A87060;
+      --gingham-bg:    #F0E6DC;
+      --gingham-sage-color: #6E8A64;
+      --gingham-sage-bg:    #E4EDE0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--warm-white);
+      color: var(--bark);
+    }
+
+    /* ── TRUE GINGHAM (crisp, like fabric) ── */
+    .gingham {
+      background-color: var(--gingham-bg);
+      background-image:
+        /* Horizontal bands */
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px,
+          transparent 20px,
+          rgba(168,112,96,0.45) 20px,
+          rgba(168,112,96,0.45) 40px
+        ),
+        /* Vertical bands */
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 20px,
+          rgba(168,112,96,0.45) 20px,
+          rgba(168,112,96,0.45) 40px
+        );
+    }
+
+    .gingham-sage {
+      background-color: var(--gingham-sage-bg);
+      background-image:
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px,
+          transparent 20px,
+          rgba(110,138,100,0.4) 20px,
+          rgba(110,138,100,0.4) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 20px,
+          rgba(110,138,100,0.4) 20px,
+          rgba(110,138,100,0.4) 40px
+        );
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(251,247,242,0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(92,61,46,0.1);
+    }
+
+    .nav-logo {
+      font-family: 'Italiana', serif;
+      font-size: 1.6rem;
+      color: var(--espresso);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.4rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--espresso);
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--latte); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 7rem 2rem 5rem;
+      position: relative;
+      overflow: hidden;
+      /* Gingham hero background */
+      background-color: var(--gingham-bg);
+      background-image:
+        repeating-linear-gradient(
+          180deg,
+          transparent 0px,
+          transparent 20px,
+          rgba(168,112,96,0.45) 20px,
+          rgba(168,112,96,0.45) 40px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0px,
+          transparent 20px,
+          rgba(168,112,96,0.45) 20px,
+          rgba(168,112,96,0.45) 40px
+        );
+    }
+
+    /* Frosted center card over gingham */
+    .hero-card {
+      background: rgba(251,247,242,0.82);
+      backdrop-filter: blur(6px);
+      border-radius: 4px;
+      padding: 4rem 5rem;
+      max-width: 680px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 500;
+      margin-bottom: 1.4rem;
+    }
+
+    /* SVG logo mark */
+    .logo-mark {
+      width: 72px;
+      height: 72px;
+      margin-bottom: 1.4rem;
+    }
+
+    .hero-title {
+      font-family: 'Italiana', serif;
+      font-size: clamp(3.2rem, 9vw, 6rem);
+      color: var(--espresso);
+      line-height: 1.05;
+      margin-bottom: 0.6rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--latte);
+    }
+
+    .hero-location {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1.6rem;
+      font-weight: 400;
+    }
+
+    .hero-divider {
+      width: 48px;
+      height: 1px;
+      background: var(--latte);
+      margin: 0 auto 1.6rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--espresso);
+      opacity: 0.8;
+      max-width: 380px;
+      line-height: 1.8;
+      margin-bottom: 2.4rem;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.85rem 2.2rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: all 0.25s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--espresso);
+      color: var(--cream);
+    }
+
+    .btn-primary:hover {
+      background: var(--bark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(92,61,46,0.22);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--espresso);
+      border: 1.5px solid var(--espresso);
+      margin-left: 1rem;
+    }
+
+    .btn-outline:hover {
+      background: var(--espresso);
+      color: var(--cream);
+      transform: translateY(-2px);
+    }
+
+    /* ── SECTION SHARED ── */
+    section { padding: 6rem 2rem; }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--sage);
+      font-weight: 500;
+      margin-bottom: 0.7rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      color: var(--espresso);
+      margin-bottom: 1.2rem;
+      line-height: 1.15;
+    }
+
+    .section-body {
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.85;
+      color: var(--bark);
+      opacity: 0.82;
+      max-width: 500px;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      background: var(--warm-white);
+      display: flex;
+      justify-content: center;
+    }
+
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      max-width: 1080px;
+      width: 100%;
+      align-items: center;
+    }
+
+    .about-img-block { position: relative; }
+
+    .about-img-placeholder {
+      width: 100%;
+      aspect-ratio: 4/5;
+      border-radius: 2px;
+      background: linear-gradient(145deg, #D4B89A, #C9A97A55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Mini gingham inside the placeholder */
+    .about-img-placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-color: #D4B89A;
+      background-image:
+        repeating-linear-gradient(180deg, transparent 0, transparent 14px, rgba(168,112,96,0.38) 14px, rgba(168,112,96,0.38) 28px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 14px, rgba(168,112,96,0.38) 14px, rgba(168,112,96,0.38) 28px);
+      border-radius: 2px;
+    }
+
+    .about-img-placeholder span {
+      position: relative;
+      z-index: 1;
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--espresso);
+      opacity: 0.6;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .about-accent {
+      position: absolute;
+      bottom: -1.2rem;
+      right: -1.2rem;
+      width: 50%;
+      aspect-ratio: 1;
+      border: 1.5px solid var(--latte);
+      opacity: 0.35;
+      z-index: -1;
+    }
+
+    /* ── MENU ── */
+    #menu {
+      text-align: center;
+    }
+
+    .menu-header { margin-bottom: 3.5rem; }
+
+    .menu-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--latte);
+      margin: 1rem auto 0;
+    }
+
+    .menu-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      margin-bottom: 3.5rem;
+      border: 1.5px solid var(--latte);
+      display: inline-flex;
+    }
+
+    .tab-btn {
+      padding: 0.6rem 1.6rem;
+      border: none;
+      border-right: 1.5px solid var(--latte);
+      background: transparent;
+      color: var(--espresso);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:last-child { border-right: none; }
+
+    .tab-btn.active,
+    .tab-btn:hover {
+      background: var(--espresso);
+      color: var(--cream);
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1px;
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(92,61,46,0.12);
+      border: 1px solid rgba(92,61,46,0.12);
+    }
+
+    .menu-card {
+      background: var(--warm-white);
+      padding: 2rem 1.8rem;
+      text-align: left;
+      transition: background 0.2s;
+    }
+
+    .menu-card:hover { background: var(--cream); }
+
+    .menu-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--espresso);
+      margin-bottom: 0.5rem;
+    }
+
+    .menu-card p {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--bark);
+      opacity: 0.7;
+      line-height: 1.65;
+      margin-bottom: 1rem;
+    }
+
+    .menu-card .price {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--latte);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── VIBES / GALLERY ── */
+    #vibes {
+      text-align: center;
+    }
+
+    .vibes-header { margin-bottom: 3rem; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .gallery-cell {
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Each gallery cell gets a gingham fill */
+    .gallery-cell::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+    }
+
+    .gallery-cell:nth-child(1)::before,
+    .gallery-cell:nth-child(3)::before,
+    .gallery-cell:nth-child(5)::before {
+      background-color: var(--gingham-bg);
+      background-image:
+        repeating-linear-gradient(180deg, transparent 0, transparent 16px, rgba(168,112,96,0.42) 16px, rgba(168,112,96,0.42) 32px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 16px, rgba(168,112,96,0.42) 16px, rgba(168,112,96,0.42) 32px);
+    }
+
+    .gallery-cell:nth-child(2)::before,
+    .gallery-cell:nth-child(4)::before {
+      background-color: var(--gingham-sage-bg);
+      background-image:
+        repeating-linear-gradient(180deg, transparent 0, transparent 16px, rgba(110,138,100,0.38) 16px, rgba(110,138,100,0.38) 32px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 16px, rgba(110,138,100,0.38) 16px, rgba(110,138,100,0.38) 32px);
+    }
+
+    .gallery-cell.tall {
+      grid-row: span 2;
+      aspect-ratio: unset;
+    }
+
+    .gallery-cell span {
+      position: relative;
+      z-index: 1;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--espresso);
+      opacity: 0.55;
+    }
+
+    /* ── GINGHAM BANNER STRIP ── */
+    .gingham-strip {
+      height: 60px;
+      background-color: var(--gingham-bg);
+      background-image:
+        repeating-linear-gradient(180deg, transparent 0, transparent 20px, rgba(168,112,96,0.45) 20px, rgba(168,112,96,0.45) 40px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 20px, rgba(168,112,96,0.45) 20px, rgba(168,112,96,0.45) 40px);
+    }
+
+    /* ── VISIT ── */
+    #visit {
+      background: var(--espresso);
+      color: var(--cream);
+      text-align: center;
+    }
+
+    #visit .section-label { color: var(--latte); }
+    #visit .section-title { color: var(--cream); margin: 0 auto 0.5rem; font-style: italic; }
+    #visit .section-body { color: var(--cream); opacity: 0.65; margin: 0 auto 3rem; }
+
+    .visit-cards {
+      display: flex;
+      justify-content: center;
+      gap: 1px;
+      flex-wrap: wrap;
+      max-width: 860px;
+      margin: 0 auto 3rem;
+      background: rgba(255,255,255,0.08);
+    }
+
+    .visit-card {
+      background: rgba(92,61,46,0.55);
+      padding: 2.2rem 2.5rem;
+      min-width: 220px;
+      flex: 1;
+    }
+
+    .visit-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.72rem;
+      color: var(--latte);
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .visit-card p {
+      font-size: 0.92rem;
+      font-weight: 300;
+      line-height: 1.75;
+      color: var(--cream);
+      opacity: 0.85;
+    }
+
+    #visit .btn-primary {
+      background: var(--latte);
+      color: var(--bark);
+    }
+
+    #visit .btn-primary:hover { background: var(--cream); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--bark);
+      color: var(--cream);
+      text-align: center;
+      padding: 2.8rem 2rem;
+    }
+
+    footer .footer-logo {
+      font-family: 'Italiana', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.6rem;
+      color: var(--latte);
+      letter-spacing: 0.04em;
+    }
+
+    footer .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      list-style: none;
+      margin: 1rem 0;
+    }
+
+    footer .footer-links a {
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--cream);
+      opacity: 0.5;
+      transition: opacity 0.2s;
+    }
+
+    footer .footer-links a:hover { opacity: 1; }
+
+    footer p {
+      font-size: 0.78rem;
+      opacity: 0.4;
+      font-weight: 300;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { gap: 1.2rem; }
+      .hero-card { padding: 2.5rem 1.8rem; }
+      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gallery-cell.tall { grid-row: span 1; aspect-ratio: 1; }
+      .btn-outline { margin-left: 0; margin-top: 0.8rem; }
+      .menu-tabs { display: flex; flex-wrap: wrap; border: none; gap: 0.5rem; }
+      .tab-btn { border: 1.5px solid var(--latte); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">Libby Lou's</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#vibes">Vibes</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-card">
+      <p class="hero-eyebrow">Covington, Kentucky</p>
+
+      <!-- Elegant coffee cup logo mark -->
+      <svg class="logo-mark" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cup body -->
+        <path d="M16 32 L20 62 Q20 64 22 64 L50 64 Q52 64 52 62 L56 32 Z" fill="none" stroke="#5C3D2E" stroke-width="1.5" stroke-linejoin="round"/>
+        <!-- Rim -->
+        <rect x="14" y="28" width="44" height="6" rx="1" fill="none" stroke="#5C3D2E" stroke-width="1.5"/>
+        <!-- Handle -->
+        <path d="M52 38 Q64 38 64 50 Q64 62 52 62" fill="none" stroke="#5C3D2E" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- Steam 1 -->
+        <path d="M28 24 C28 20 30 18 28 14" fill="none" stroke="#B8896A" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- Steam 2 -->
+        <path d="M36 22 C36 18 38 16 36 12" fill="none" stroke="#B8896A" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- Steam 3 -->
+        <path d="M44 24 C44 20 46 18 44 14" fill="none" stroke="#B8896A" stroke-width="1.2" stroke-linecap="round"/>
+        <!-- Gingham lines on cup -->
+        <line x1="20" y1="44" x2="55" y2="44" stroke="#B8896A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="19" y1="52" x2="54" y2="52" stroke="#B8896A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="30" y1="34" x2="28" y2="64" stroke="#B8896A" stroke-width="0.8" opacity="0.5"/>
+        <line x1="42" y1="34" x2="44" y2="64" stroke="#B8896A" stroke-width="0.8" opacity="0.5"/>
+      </svg>
+
+      <h1 class="hero-title">Libby <em>Lou's</em></h1>
+      <p class="hero-location">710 Washington St · Covington, KY</p>
+      <div class="hero-divider"></div>
+      <p class="hero-sub">Good coffee. Good light. A place that feels like yours the moment you walk in.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:0.8rem;justify-content:center;">
+        <a href="#menu" class="btn btn-primary">See the Menu</a>
+        <a href="#visit" class="btn btn-outline">Find Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-inner">
+      <div class="about-img-block">
+        <div class="about-img-placeholder">
+          <span>Photo Coming Soon</span>
+        </div>
+        <div class="about-accent"></div>
+      </div>
+      <div>
+        <p class="section-label">Our Story</p>
+        <h2 class="section-title">A little shop<br/><em>with a lot of soul.</em></h2>
+        <div style="width:36px;height:1px;background:var(--latte);margin-bottom:1.6rem;"></div>
+        <p class="section-body">
+          Libby Lou's was born out of a love for slow mornings, warm mugs, and the kind of place where you actually want to linger. Tucked into the heart of Covington, KY, we're your neighborhood spot for craft coffee, seasonal drinks, and homemade bites — made with care, served with a smile.
+        </p>
+        <br/>
+        <p class="section-body">
+          Whether you're here to work, catch up with a friend, or just breathe for a minute — you belong here.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GINGHAM STRIP -->
+  <div class="gingham-strip"></div>
+
+  <!-- MENU -->
+  <section id="menu" style="background:var(--warm-white);">
+    <div class="menu-header">
+      <span class="section-label">What We're Pouring</span>
+      <h2 class="section-title" style="font-style:italic;">The Menu</h2>
+      <div class="menu-rule"></div>
+    </div>
+    <div style="text-align:center;margin-bottom:3rem;">
+      <div class="menu-tabs">
+        <button class="tab-btn active">Drinks</button>
+        <button class="tab-btn">Bites</button>
+        <button class="tab-btn">Seasonal</button>
+      </div>
+    </div>
+    <div class="menu-grid">
+      <div class="menu-card">
+        <h3>Classic Latte</h3>
+        <p>Double shot espresso, silky steamed milk, your choice of oat, almond, or whole.</p>
+        <span class="price">$5.50</span>
+      </div>
+      <div class="menu-card">
+        <h3>Brown Sugar Oat Latte</h3>
+        <p>Espresso shaken with brown sugar syrup over ice, topped with oat milk.</p>
+        <span class="price">$6.25</span>
+      </div>
+      <div class="menu-card">
+        <h3>Matcha Latte</h3>
+        <p>Ceremonial grade matcha whisked smooth with your choice of milk, hot or iced.</p>
+        <span class="price">$5.75</span>
+      </div>
+      <div class="menu-card">
+        <h3>Honey Lavender Fog</h3>
+        <p>Earl Grey tea, lavender syrup, honey, and steamed oat milk. Dreamy.</p>
+        <span class="price">$5.50</span>
+      </div>
+      <div class="menu-card">
+        <h3>Cold Brew</h3>
+        <p>Slow-steeped 18 hours. Smooth, bold, and ready to carry you through the day.</p>
+        <span class="price">$4.75</span>
+      </div>
+      <div class="menu-card">
+        <h3>Dirty Chai</h3>
+        <p>House-spiced chai concentrate with a double shot of espresso. A little spicy, a little sweet.</p>
+        <span class="price">$6.00</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- VIBES / GALLERY -->
+  <section id="vibes" class="gingham-sage">
+    <div class="vibes-header">
+      <p class="section-label">The Space</p>
+      <h2 class="section-title" style="font-style:italic;">Come as you are.</h2>
+      <div style="width:36px;height:1px;background:var(--sage);margin:0 auto;"></div>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-cell tall"><span>Interior</span></div>
+      <div class="gallery-cell"><span>Coffee</span></div>
+      <div class="gallery-cell"><span>Pastries</span></div>
+      <div class="gallery-cell"><span>Details</span></div>
+      <div class="gallery-cell"><span>Ambiance</span></div>
+    </div>
+  </section>
+
+  <!-- VISIT -->
+  <section id="visit">
+    <p class="section-label">Come See Us</p>
+    <h2 class="section-title">You know where<br/>to find us.</h2>
+    <p class="section-body" style="margin:0 auto 3rem;">Drop in, pull up a chair, and stay a while.</p>
+    <div class="visit-cards">
+      <div class="visit-card">
+        <h3>Location</h3>
+        <p>710 Washington St<br/>Covington, KY</p>
+      </div>
+      <div class="visit-card">
+        <h3>Hours</h3>
+        <p>
+          Mon – Fri: 7am – 6pm<br/>
+          Sat: 8am – 5pm<br/>
+          Sun: 9am – 3pm
+        </p>
+      </div>
+      <div class="visit-card">
+        <h3>Stay Connected</h3>
+        <p>@libbylous<br/>Instagram & TikTok</p>
+      </div>
+    </div>
+    <a href="https://maps.google.com/?q=710+Washington+St+Covington+KY" target="_blank" class="btn btn-primary">Get Directions</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">Libby Lou's</div>
+    <ul class="footer-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#menu">Menu</a></li>
+      <li><a href="#vibes">Vibes</a></li>
+      <li><a href="#visit">Visit</a></li>
+    </ul>
+    <p>© 2026 Libby Lou's · 710 Washington St, Covington, KY</p>
+  </footer>
+
+  <script>
+    // Tab switching
+    const tabs = document.querySelectorAll('.tab-btn');
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>
